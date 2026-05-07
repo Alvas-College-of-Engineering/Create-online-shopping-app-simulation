@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - ShopNova</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+
+<main>
+    <h2>Checkout</h2>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <div style="flex: 2; min-width: 300px;">
+            <form action="/checkout" method="post" style="max-width: none; margin: 0;">
+                <h3>Shipping Details</h3>
+                <div class="form-group">
+                    <label for="shippingAddress">Full Shipping Address</label>
+                    <input type="text" id="shippingAddress" name="shippingAddress" required placeholder="Street, City, Zip, Country">
+                </div>
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+        </div>
+        
+        <div style="flex: 1; min-width: 300px; background-color: var(--surface-color); padding: 2rem; border-radius: 8px;">
+            <h3>Order Summary</h3>
+            <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                <li th:each="item : ${session.cart.items}" style="display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 0.5rem 0;">
+                    <span th:text="${item.product.name} + ' x ' + ${item.quantity}">Product</span>
+                    <span th:text="|$${item.product.price * item.quantity}|">$0.00</span>
+                </li>
+            </ul>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+                <span>Total:</span>
+                <span style="color: var(--primary-color);" th:text="|$${session.cart.totalAmount}|">$0.00</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

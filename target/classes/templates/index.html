@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopNova - Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments :: header"></div>
+
+<main>
+    <section class="hero" style="text-align: center; margin-bottom: 3rem; background-image: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0.7)), url('/images/banner.png'); background-size: cover; background-position: center; padding: 6rem 2rem; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h1 style="font-size: 3.5rem; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); margin-bottom: 1rem;">Welcome to ShopNova</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #ccc; text-shadow: 0 1px 5px rgba(0,0,0,0.8);">Discover the best products at unbeatable prices.</p>
+        <a href="/products" class="btn" style="width: auto; padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(187,134,252,0.4);">Shop Now</a>
+    </section>
+
+    <section>
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card" th:each="product : ${products}">
+                <div class="product-img" style="padding: 0; background-color: transparent;">
+                    <img th:src="${product.imageUrl}" th:alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title" th:text="${product.name}">Product Name</h3>
+                    <div class="product-price" th:text="|$${product.price}|">$0.00</div>
+                    <form action="/cart/add" method="post" style="box-shadow: none; padding: 0; background: transparent; margin: 0; width: 100%;">
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="fragments :: footer"></div>
+
+</body>
+</html>

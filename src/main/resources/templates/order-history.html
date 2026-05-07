@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order History - ShopNova</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+
+<main>
+    <h2>Order History</h2>
+    
+    <div th:if="${param.success}" class="alert alert-success">
+        Order placed successfully! Thank you for shopping with us.
+    </div>
+
+    <div th:if="${orders.empty}" class="alert alert-error" style="text-align: center;">
+        You have no previous orders.
+    </div>
+    
+    <div th:each="order : ${orders}" style="background-color: var(--surface-color); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1rem;">
+            <div>
+                <strong>Order ID:</strong> <span th:text="${order.id}"></span><br>
+                <strong>Date:</strong> <span th:text="${order.createdAt}"></span>
+            </div>
+            <div style="text-align: right;">
+                <strong>Total:</strong> <span style="color: var(--primary-color);" th:text="|$${order.totalAmount}|"></span><br>
+                <strong>Status:</strong> <span th:text="${order.status}"></span>
+            </div>
+        </div>
+        <div>
+            <strong>Shipping Address:</strong> <span th:text="${order.shippingAddress}"></span>
+        </div>
+        <h4 style="margin-top: 1rem;">Items</h4>
+        <ul style="list-style: none; padding-left: 0;">
+            <li th:each="item : ${order.items}" style="padding: 0.25rem 0;">
+                <span th:text="${item.product.name} + ' - Quantity: ' + ${item.quantity} + ' - Price: $' + ${item.price}"></span>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>
